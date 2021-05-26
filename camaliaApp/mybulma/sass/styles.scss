@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+//Colors
+$purple-primary: #B7B7A4;
+
+//Update Bulma variables
+$primary: $purple-primary;
+  
+// Import only what you need from Bulma
+@import "../node_modules/bulma/bulma.sass";
+
+
