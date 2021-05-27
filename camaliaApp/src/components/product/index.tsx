@@ -3,6 +3,8 @@ import { Heading } from '../typography';
 import { Flex } from '../layout';
 import environment from '../../util/environment';
 import { Link } from 'react-router-dom';
+import { style } from 'typestyle';
+import Theme from 'config/theme';
 
 export const ProductImage = ({ src, alt }: { src?: string; alt?: string }) => {
   const containerStyle = {
@@ -10,20 +12,24 @@ export const ProductImage = ({ src, alt }: { src?: string; alt?: string }) => {
     marginBottom: '7px',
   };
 
+  const imageStyle = style({
+    maxHeight: '200px',
+    objectFit: 'cover',
+    borderRadius: '7%',
+    boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
+    transition: 'box-shadow .5s',
+    $nest: {
+      '&:hover': {
+        boxShadow: '5px 4px 10px 1px ' + Theme.camaliaColorPalatte.warmGrey,
+      },
+    },
+  });
+
   return (
     <>
       {src && alt ? (
         <figure className="image" style={containerStyle}>
-          <img
-            src={src}
-            alt={alt}
-            style={{
-              maxHeight: '200px',
-              objectFit: 'cover',
-              borderRadius: '7%',
-              boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
-            }}
-          />
+          <img className={imageStyle} src={src} alt={alt} />
         </figure>
       ) : (
         <p>source not valid</p>

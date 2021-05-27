@@ -48,7 +48,7 @@ export function Heading({
   size: number | number[];
   align: 'left' | 'right' | 'centered' | 'justified';
   isSubtitle?: boolean;
-  children: string;
+  children: string | JSX.Element;
   id?: any;
   color:
     | 'white'
