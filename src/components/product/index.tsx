@@ -26,10 +26,11 @@ export const ProductImage = ({ src, alt }: { src?: string; alt?: string }) => {
     objectFit: 'cover',
     borderRadius: '7%',
     boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
-    transition: 'box-shadow .5s',
+    transition: 'all .3s ease',
     $nest: {
       '&:hover': {
-        boxShadow: '5px 4px 10px 1px ' + Theme.camaliaColorPalatte.warmGrey,
+        boxShadow: '4px 3px 10px 1px rgba(130,120,100,0.3)',
+        transform: 'scale(1.02)',
       },
     },
   });
