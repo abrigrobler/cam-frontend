@@ -59,7 +59,7 @@ export default ({
     >
       <Link to={'/products/:' + productId} replace>
         <ProductImage
-          src={images[0] ? environment.db_URL + images[0].url : ''}
+          src={images[0] ? images[0].url : ''}
           alt={images[0] ? images[0].name : 'Image not found'}
         />
         <Heading size={[1, 2]} color="grey" align="left">

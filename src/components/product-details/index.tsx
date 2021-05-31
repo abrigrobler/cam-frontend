@@ -33,11 +33,7 @@ const ScrollingImages = ({
             <a onClick={() => setActiveImageIndex(idx)}>
               <div
                 style={{
-                  background:
-                    'url(' +
-                    environment.db_URL +
-                    image.formats.thumbnail.url +
-                    ')',
+                  background: 'url(' + image.formats.thumbnail.url + ')',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   width: '100px',
@@ -92,7 +88,7 @@ const MobileImageGallery = ({
       }}
     >
       <img
-        src={environment.db_URL + productImages[activeImageIndex].url}
+        src={productImages[activeImageIndex].url}
         style={{
           width: '100%',
           height: imageWidth,
@@ -148,7 +144,7 @@ const ImageGalleryWithNavigation = ({
         }}
       >
         <img
-          src={environment.db_URL + productImages[activeImageIndex].url}
+          src={productImages[activeImageIndex].url}
           style={{
             width: '100%',
             height: imageWidth,
