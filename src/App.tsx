@@ -19,6 +19,7 @@ import { ProductInterface } from './config/types';
 import Footer from './components/footer';
 import { useGetProducts } from './hooks';
 import { productCategories } from './config/types';
+import { Flex } from './components/layout';
 
 //TODO: Add a 404 not found page
 //TODO: Prepare for the case where a user tries to access an undefined route
@@ -51,25 +52,27 @@ function App() {
           hasShadow
           productCategories={productCategories}
         />
-        <Switch>
-          <Route exact path="/">
-            <LandingPage
-              products={products}
-              productCategories={productCategories}
-            />
-          </Route>
-          <Route path={'/categories/:category'}>
-            <ProductCategoryPage products={products} />
-          </Route>
-          <Route path={'/products/:productId'}>
-            <ProductDetailsPage />
-          </Route>
-          <Route exact path="/story">
-            <StoryPage />
-          </Route>
-          {/*TODO: Be sure to create this page later */}
-          <Route exact path="/404" component={LandingPage} />
-        </Switch>
+        <Flex flexDirection="column" style={{ flex: '1 0 auto' }}>
+          <Switch>
+            <Route exact path="/">
+              <LandingPage
+                products={products}
+                productCategories={productCategories}
+              />
+            </Route>
+            <Route path={'/categories/:category'}>
+              <ProductCategoryPage products={products} />
+            </Route>
+            <Route path={'/products/:productId'}>
+              <ProductDetailsPage />
+            </Route>
+            <Route exact path="/story">
+              <StoryPage />
+            </Route>
+            {/*TODO: Be sure to create this page later */}
+            <Route exact path="/404" component={LandingPage} />
+          </Switch>
+        </Flex>
         <Footer />
       </Router>
     </div>

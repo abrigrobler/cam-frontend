@@ -1,3 +1,3 @@
 export default {
-  db_URL: 'http://localhost:1337',
+  db_URL: 'https://strapi-zn1t.onrender.com',
 };
