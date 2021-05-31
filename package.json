@@ -23,7 +23,7 @@
     "yarn": "^1.22.10"
   },
   "scripts": {
-    "start": "rm -r tsconfig.json && react-scripts start",
+    "dev": "rm -r tsconfig.json && react-scripts start",
     "build": "rm -r tsconfig.json && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

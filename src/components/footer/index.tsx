@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import environment from '../../util/environment';
 
 const Footer = () => (
-  <>
+  <footer style={{ flexShrink: 0 }}>
     <Spacer height="40px" />
     <Section
       className="has-background-primary"
@@ -27,7 +27,7 @@ const Footer = () => (
         Website created and maintained by Abri Grobler
       </Text>
     </Section>
-  </>
+  </footer>
 );
 
 export default Footer;

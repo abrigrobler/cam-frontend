@@ -78,33 +78,63 @@ const MobileImageGallery = ({
   productImages: ProductImageInterface[];
   imageWidth: number;
   setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>;
-}) => (
-  <Flex justifyContent="center">
-    <div
-      ref={imageRef}
-      style={{
-        maxWidth: '90%',
-        justifyContent: 'center',
-      }}
-    >
-      <img
-        src={productImages[activeImageIndex].url}
-        style={{
-          width: '100%',
-          height: imageWidth,
-          objectFit: 'cover',
-          borderRadius: '7%',
-          boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
-        }}
-      />
+}) => {
+  const [imageHasLoaded, setImageHasLoaded] = useState(false);
 
-      <ScrollingImages
-        images={productImages}
-        setActiveImageIndex={setActiveImageIndex}
-      />
-    </div>
-  </Flex>
-);
+  useEffect(() => {
+    setImageHasLoaded(false);
+  }, [activeImageIndex]);
+
+  return (
+    <Flex justifyContent="center">
+      <div
+        ref={imageRef}
+        style={{
+          maxWidth: '90%',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
+      >
+        {!imageHasLoaded && (
+          <Flex
+            justifyContent="center"
+            alignContent="center"
+            alignItems="center"
+            style={{
+              zIndex: 9,
+              position: 'absolute',
+              width: '100%',
+              height: '50%',
+            }}
+          >
+            <Loader
+              type="Circles"
+              color={Theme.camaliaColorPalatte.lightShadow}
+              size={100}
+            />
+          </Flex>
+        )}
+        <img
+          src={productImages[activeImageIndex].url}
+          style={{
+            opacity: imageHasLoaded ? '100%' : '20%',
+            width: '100%',
+            height: imageWidth,
+            objectFit: 'cover',
+            borderRadius: '7%',
+            boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
+          }}
+          onLoad={() => setImageHasLoaded(true)}
+        />
+
+        <ScrollingImages
+          images={productImages}
+          setActiveImageIndex={setActiveImageIndex}
+        />
+      </div>
+    </Flex>
+  );
+};
 
 const ImageGalleryWithNavigation = ({
   activeImageIndex,
@@ -119,6 +149,11 @@ const ImageGalleryWithNavigation = ({
   imageWidth: number;
   setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+  const [imageHasLoaded, setImageHasLoaded] = useState(false);
+
+  useEffect(() => {
+    setImageHasLoaded(false);
+  }, [activeImageIndex]);
   return (
     <Flex justifyContent="center" flexDirection="row" alignItems="center">
       <Button
@@ -141,17 +176,39 @@ const ImageGalleryWithNavigation = ({
         style={{
           width: '400px',
           justifyContent: 'center',
+          position: 'relative',
         }}
       >
+        {!imageHasLoaded && (
+          <Flex
+            justifyContent="center"
+            alignContent="center"
+            alignItems="center"
+            style={{
+              zIndex: 9,
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <Loader
+              type="Circles"
+              color={Theme.camaliaColorPalatte.lightShadow}
+              size={200}
+            />
+          </Flex>
+        )}
         <img
           src={productImages[activeImageIndex].url}
           style={{
+            opacity: imageHasLoaded ? '100%' : '20%',
             width: '100%',
             height: imageWidth,
             objectFit: 'cover',
             borderRadius: '7%',
             boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
           }}
+          onLoad={() => setImageHasLoaded(true)}
         />
       </div>
       <Button
@@ -191,7 +248,7 @@ export default ({ product }: { product: ProductInterface }) => {
   return (
     <>
       <Section>
-        <Spacer height="50px" />
+        <Spacer height="70px" />
         {product.Description ? (
           <>
             <>
@@ -211,7 +268,7 @@ export default ({ product }: { product: ProductInterface }) => {
                         '1px solid' + Theme.camaliaColorPalatte.greyishOlive,
                     }}
                   >
-                    {product.Sold
+                    {!product.Sold
                       ? 'R ' +
                         product.Price +
                         '.00' +

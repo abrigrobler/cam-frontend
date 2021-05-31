@@ -11,13 +11,13 @@ export default ({ products }: { products: ProductInterface[] }) => {
   return (
     <Section style={{ marginTop: '-40px' }}>
       <>
-        {!canShowProducts && (
+        {products && !canShowProducts && (
           <Heading size={1} color="grey-light" align="centered">
             There are no products in this category (yet)
           </Heading>
         )}
       </>
-      {products ? (
+      {products && products.length > 0 ? (
         <Flex flexWrap="wrap" justifyContent="center">
           <Grid
             columns={['1fr 1fr', '1fr 1fr 1fr 1fr 1fr 1fr']}
