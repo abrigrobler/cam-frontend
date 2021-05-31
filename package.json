@@ -1,5 +1,6 @@
 {
   "name": "camalia-app",
+  "homepage": "https://camalia.co.za",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
