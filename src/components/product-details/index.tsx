@@ -10,6 +10,51 @@ import Icon from '../font-awesome-icon';
 import ReactMarkdown from 'react-markdown';
 import Loader from '../loader';
 
+const ActiveImage = ({
+  src,
+  imageWidth,
+}: {
+  src: string;
+  imageWidth: number;
+}) => {
+  const [imageHasLoaded, setImageHasLoaded] = useState(false);
+  return (
+    <>
+      {!imageHasLoaded && (
+        <Flex
+          justifyContent="center"
+          alignContent="center"
+          alignItems="center"
+          style={{
+            zIndex: 9,
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Loader
+            type="Circles"
+            color={Theme.camaliaColorPalatte.lightShadow}
+            size={200}
+          />
+        </Flex>
+      )}
+      <img
+        src={src}
+        style={{
+          opacity: imageHasLoaded ? '100%' : '20%',
+          width: '100%',
+          height: imageWidth,
+          objectFit: 'cover',
+          borderRadius: '7%',
+          boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
+        }}
+        onLoad={() => setImageHasLoaded(true)}
+      />
+    </>
+  );
+};
+
 const ScrollingImages = ({
   images,
   setActiveImageIndex,
@@ -79,12 +124,6 @@ const MobileImageGallery = ({
   imageWidth: number;
   setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const [imageHasLoaded, setImageHasLoaded] = useState(false);
-
-  useEffect(() => {
-    setImageHasLoaded(false);
-  }, [activeImageIndex]);
-
   return (
     <Flex justifyContent="center">
       <div
@@ -95,37 +134,15 @@ const MobileImageGallery = ({
           position: 'relative',
         }}
       >
-        {!imageHasLoaded && (
-          <Flex
-            justifyContent="center"
-            alignContent="center"
-            alignItems="center"
-            style={{
-              zIndex: 9,
-              position: 'absolute',
-              width: '100%',
-              height: '50%',
-            }}
-          >
-            <Loader
-              type="Circles"
-              color={Theme.camaliaColorPalatte.lightShadow}
-              size={100}
-            />
-          </Flex>
-        )}
-        <img
-          src={productImages[activeImageIndex].url}
-          style={{
-            opacity: imageHasLoaded ? '100%' : '20%',
-            width: '100%',
-            height: imageWidth,
-            objectFit: 'cover',
-            borderRadius: '7%',
-            boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
-          }}
-          onLoad={() => setImageHasLoaded(true)}
-        />
+        <>
+          {productImages.map((image, idx) => (
+            <div
+              style={{ display: activeImageIndex === idx ? 'block' : 'none' }}
+            >
+              <ActiveImage src={image.url} imageWidth={imageWidth} />
+            </div>
+          ))}
+        </>
 
         <ScrollingImages
           images={productImages}
@@ -149,11 +166,6 @@ const ImageGalleryWithNavigation = ({
   imageWidth: number;
   setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const [imageHasLoaded, setImageHasLoaded] = useState(false);
-
-  useEffect(() => {
-    setImageHasLoaded(false);
-  }, [activeImageIndex]);
   return (
     <Flex justifyContent="center" flexDirection="row" alignItems="center">
       <Button
@@ -171,46 +183,22 @@ const ImageGalleryWithNavigation = ({
       >
         <Icon icon="arrow-alt-circle-left" style={{ fontSize: '40px' }} />
       </Button>
-      <div
-        ref={imageRef}
-        style={{
-          width: '400px',
-          justifyContent: 'center',
-          position: 'relative',
-        }}
-      >
-        {!imageHasLoaded && (
-          <Flex
-            justifyContent="center"
-            alignContent="center"
-            alignItems="center"
+      <>
+        {productImages.map((image: ProductImageInterface, idx: number) => (
+          <div
+            ref={imageRef}
+            key={idx}
             style={{
-              zIndex: 9,
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
+              width: '400px',
+              justifyContent: 'center',
+              position: 'relative',
+              display: activeImageIndex === idx ? 'block' : 'none',
             }}
           >
-            <Loader
-              type="Circles"
-              color={Theme.camaliaColorPalatte.lightShadow}
-              size={200}
-            />
-          </Flex>
-        )}
-        <img
-          src={productImages[activeImageIndex].url}
-          style={{
-            opacity: imageHasLoaded ? '100%' : '20%',
-            width: '100%',
-            height: imageWidth,
-            objectFit: 'cover',
-            borderRadius: '7%',
-            boxShadow: '3px 2px 10px 1px rgba(130,120,100,0.26)',
-          }}
-          onLoad={() => setImageHasLoaded(true)}
-        />
-      </div>
+            <ActiveImage src={image.url} imageWidth={imageWidth} />
+          </div>
+        ))}
+      </>
       <Button
         size="small"
         rounded
